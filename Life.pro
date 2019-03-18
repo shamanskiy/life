@@ -16,15 +16,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    source/CellManager.cpp \
-    source/LifeCell.cpp \
-    source/CellField.cpp \
-    source/ControlPanel.cpp
+    source/cellManager.cpp \
+    source/cellDrawer.cpp
 
 HEADERS  += mainwindow.h \
-    source/CellManager.h \
-    source/LifeCell.h \
-    source/CellField.h \
-    source/ControlPanel.h
+    source/cellManager.h \
+    source/cellDrawer.h
 
 FORMS    += mainwindow.ui
