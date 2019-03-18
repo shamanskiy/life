@@ -1,13 +1,13 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
-#include <QDebug>
+#include <QTimer>
 
-#include "source/CellField.h"
-#include "source/CellManager.h"
+#include "source/cellDrawer.h"
+#include "source/cellManager.h"
 
-namespace Ui {
+namespace Ui
+{
 class MainWindow;
 }
 
@@ -19,19 +19,16 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private:
-    int cellSize;
-    int xSize;
-    int ySize;
-    int defaultSpeed;
-
 protected:
     virtual void keyPressEvent(QKeyEvent *event);
 
-private:
+protected slots:
+    void nextStep();
+
+protected:
     Ui::MainWindow *ui;
     CellManager cellManager;
-    CellField* cellField;
+    CellDrawer cellDrawer;
+    QTimer timer;
 };
 
-#endif // MAINWINDOW_H

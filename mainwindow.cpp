@@ -3,23 +3,24 @@
 
 #include <QKeyEvent>
 #include <QLayout>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    cellSize(20),
-    xSize(60),
-    ySize(40),
-    defaultSpeed(500),
-    cellManager(xSize,ySize,defaultSpeed)
+    cellManager(30,30),
+    cellDrawer(cellManager,this),
+    timer()
 {
-    cellField = new CellField(xSize,ySize,cellSize,&cellManager,this);
     ui->setupUi(this);
     ui->mainToolBar->setVisible(false);
     setWindowTitle("Life");
-    setCentralWidget(cellField);
+    setCentralWidget(&cellDrawer);
     move(QPoint(50,50));
     setPalette(QPalette(QColor(Qt::black)));
+
+    timer.setInterval(400);
+    connect(&timer,SIGNAL(timeout()),SLOT(nextStep()));
 }
 
 MainWindow::~MainWindow()
@@ -28,12 +29,25 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
-    if (event->key()==Qt::Key_Space){
-        cellManager.toggle();
+    if (event->key()==Qt::Key_Space)
+    {
+        if (timer.isActive())
+            timer.stop();
+        else
+            timer.start();
     }
+
     if (event->key()==Qt::Key_C)
     {
+        timer.stop();
         cellManager.clear();
+        cellDrawer.update();
     }
     event->accept();
+}
+
+void MainWindow::nextStep()
+{
+    cellManager.computeNextStep();
+    cellDrawer.update();
 }

@@ -1,32 +1,25 @@
-#include "CellField.h"
+#include "cellDrawer.h"
 
-CellField::CellField(QWidget *parent) :
-    QLabel(parent),
-    xSize(0),
-    ySize(0),
-    cellSize(0),
-    cellManager(nullptr)
-{
-}
+#include <QPainter>
+#include <QPoint>
+#include <QMouseEvent>
+#include <QDebug>
 
-CellField::CellField(int _xSize, int _ySize, int _cellSize, CellManager *_cellManager, QWidget *parent):
+#include "cellManager.h"
+
+
+CellDrawer::CellDrawer(CellManager & _cellManager, QWidget *parent):
     QLabel(parent),
-    xSize(_xSize),
-    ySize(_ySize),
-    cellSize(_cellSize),
-    cellManager(_cellManager)
+    cellSize(20),
+    cellManager(_cellManager),
+    xSize(cellManager.xSize()),
+    ySize(cellManager.ySize())
 {
     setMinimumSize(cellSize*xSize,cellSize*ySize);
     setPalette(QPalette(QColor(Qt::black)));
-    connect(cellManager,SIGNAL(drawMe()),SLOT(update()));
 }
 
-CellField::~CellField()
-{
-    cellManager = nullptr;
-}
-
-void CellField::drawMesh(QPainter &painter)
+void CellDrawer::drawMesh(QPainter &painter)
 {
     QPoint begin,end;
     for (int i=0; i<= xSize;i++){
@@ -42,7 +35,7 @@ void CellField::drawMesh(QPainter &painter)
     }
 }
 
-void CellField::drawCell(int x, int y, QPainter &painter)
+void CellDrawer::drawCell(int x, int y, QPainter &painter)
 {
     QPoint begin, end;
     begin = QPoint(x*cellSize+1,y*cellSize+1);
@@ -50,7 +43,7 @@ void CellField::drawCell(int x, int y, QPainter &painter)
     painter.drawRoundedRect(QRect(begin,end),3,3);
 }
 
-void CellField::paintEvent(QPaintEvent *event)
+void CellDrawer::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
@@ -60,20 +53,18 @@ void CellField::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::green,0));
     painter.setBrush(QBrush(Qt::green,Qt::SolidPattern));
 
-    for (int i=0;i< xSize;i++){
-        for (int j=0; j< ySize; j++){
-            if (cellManager->checkCell(i,j)){
+    for (int i=0;i< xSize;i++)
+        for (int j=0; j< ySize; j++)
+            if (cellManager.checkCell(i,j))
                 drawCell(i,j,painter);
-            }
-        }
-    }
 }
 
-void CellField::mousePressEvent(QMouseEvent *event)
+void CellDrawer::mousePressEvent(QMouseEvent *event)
 {
     if (event->button()==Qt::LeftButton)
     {
-        cellManager->clickCell(event->pos().rx()/cellSize,event->pos().ry()/cellSize);
+        cellManager.clickCell(event->pos().rx()/cellSize,event->pos().ry()/cellSize);
     }
     event->accept();
+    update();
 }
