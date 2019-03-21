@@ -1,6 +1,11 @@
 #pragma once
 
 #include <QLabel>
+#include <QPushButton>
+#include <QLCDNumber>
+#include <QTimer>
+
+class CellManager;
 
 class ControlPanel : public QLabel
 {
@@ -9,10 +14,19 @@ public:
 
     ControlPanel();
 
-protected:
-    virtual void paintEvent(QPaintEvent *event);
-    virtual void mousePressEvent(QMouseEvent *event);
+public slots:
+    void startStop();
+    void reset();
+
+protected slots:
+    void makeNextStep();
+
+signals:
+    void nextStep();
+    void clearCells();
 
 protected:
-
+    QPushButton startStopButton;
+    //QLCDNumber iterationCounter;
+    QTimer timer;
 };

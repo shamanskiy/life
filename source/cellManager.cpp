@@ -3,6 +3,7 @@
 #include <QDebug>
 
 CellManager::CellManager(int xSize, int ySize) :
+    QObject(),
     m_xSize(xSize),
     m_ySize(ySize),
     cells(xSize*ySize,false)
