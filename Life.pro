@@ -17,10 +17,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     source/cellManager.cpp \
-    source/cellDrawer.cpp
+    source/cellDrawer.cpp \
+    source/controlPanel.cpp \
+    source/patternSelector.cpp
 
 HEADERS  += mainwindow.h \
     source/cellManager.h \
-    source/cellDrawer.h
+    source/cellDrawer.h \
+    source/controlPanel.h \
+    source/patternSelector.h
 
 FORMS    += mainwindow.ui

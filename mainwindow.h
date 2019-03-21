@@ -5,6 +5,8 @@
 
 #include "source/cellDrawer.h"
 #include "source/cellManager.h"
+#include "source/controlPanel.h"
+#include "source/patternSelector.h"
 
 namespace Ui
 {
@@ -29,6 +31,8 @@ protected:
     Ui::MainWindow *ui;
     CellManager cellManager;
     CellDrawer cellDrawer;
+    ControlPanel controlPanel;
+    PatternSelector patternSelector;
     QTimer timer;
 };
 

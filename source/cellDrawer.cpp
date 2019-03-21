@@ -1,21 +1,20 @@
 #include "cellDrawer.h"
 
 #include <QPainter>
-#include <QPoint>
 #include <QMouseEvent>
-#include <QDebug>
 
 #include "cellManager.h"
 
 
-CellDrawer::CellDrawer(CellManager & _cellManager, QWidget *parent):
-    QLabel(parent),
+CellDrawer::CellDrawer(CellManager & _cellManager):
+    QLabel(),
     cellSize(20),
     cellManager(_cellManager),
     xSize(cellManager.xSize()),
     ySize(cellManager.ySize())
 {
     setMinimumSize(cellSize*xSize,cellSize*ySize);
+    setAutoFillBackground(true);
     setPalette(QPalette(QColor(Qt::black)));
 }
 

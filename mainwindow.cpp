@@ -3,23 +3,32 @@
 
 #include <QKeyEvent>
 #include <QLayout>
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     cellManager(30,30),
-    cellDrawer(cellManager,this),
+    cellDrawer(cellManager),//,this),
+    controlPanel(),//this),
+    patternSelector(),//this),
     timer()
 {
     ui->setupUi(this);
     ui->mainToolBar->setVisible(false);
+    ui->statusBar->hide();
     setWindowTitle("Life");
-    setCentralWidget(&cellDrawer);
-    move(QPoint(50,50));
-    setPalette(QPalette(QColor(Qt::black)));
 
-    timer.setInterval(400);
+    QGridLayout* layout = new QGridLayout;
+    layout->addWidget(&cellDrawer,0,0);
+    layout->addWidget(&controlPanel,1,0);
+    layout->addWidget(&patternSelector,0,1,2,1);
+    QWidget* widget = new QWidget;
+    layout->setSpacing(0);
+    layout->setMargin(0);
+    widget->setLayout(layout);
+    setCentralWidget(widget);
+
+    timer.setInterval(100);
     connect(&timer,SIGNAL(timeout()),SLOT(nextStep()));
 }
 
