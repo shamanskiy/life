@@ -8,10 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     cellManager(30,30),
-    cellDrawer(cellManager),//,this),
-    controlPanel(),//this),
-    patternSelector(),//this),
-    timer()
+    cellDrawer(cellManager),
+    controlPanel(),
+    patternSelector()
 {
     ui->setupUi(this);
     ui->mainToolBar->setVisible(false);
@@ -28,8 +27,11 @@ MainWindow::MainWindow(QWidget *parent) :
     widget->setLayout(layout);
     setCentralWidget(widget);
 
-    timer.setInterval(100);
-    connect(&timer,SIGNAL(timeout()),SLOT(nextStep()));
+    connect(&controlPanel,SIGNAL(nextStep()),&cellManager,SLOT(computeNextStep()));
+    connect(&controlPanel,SIGNAL(nextStep()),&cellDrawer,SLOT(update()));
+    connect(&controlPanel,SIGNAL(clearCells()),&cellManager,SLOT(clear()));
+    connect(&controlPanel,SIGNAL(clearCells()),&cellDrawer,SLOT(update()));
+
 }
 
 MainWindow::~MainWindow()
@@ -37,26 +39,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
 void MainWindow::keyPressEvent(QKeyEvent *event){
     if (event->key()==Qt::Key_Space)
-    {
-        if (timer.isActive())
-            timer.stop();
-        else
-            timer.start();
-    }
+        controlPanel.startStop();
 
     if (event->key()==Qt::Key_C)
-    {
-        timer.stop();
-        cellManager.clear();
-        cellDrawer.update();
-    }
+        controlPanel.reset();
+
     event->accept();
 }
 
-void MainWindow::nextStep()
-{
-    cellManager.computeNextStep();
-    cellDrawer.update();
-}
