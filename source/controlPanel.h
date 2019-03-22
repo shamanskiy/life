@@ -27,6 +27,8 @@ signals:
 
 protected:
     QPushButton startStopButton;
-    //QLCDNumber iterationCounter;
+    QLCDNumber iterationCounter;
     QTimer timer;
+
+    int numIterations;
 };
