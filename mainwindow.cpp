@@ -3,6 +3,7 @@
 
 #include <QKeyEvent>
 #include <QLayout>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -31,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&controlPanel,SIGNAL(nextStep()),&cellDrawer,SLOT(update()));
     connect(&controlPanel,SIGNAL(clearCells()),&cellManager,SLOT(clear()));
     connect(&controlPanel,SIGNAL(clearCells()),&cellDrawer,SLOT(update()));
-
 }
 
 MainWindow::~MainWindow()

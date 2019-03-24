@@ -21,11 +21,16 @@ ControlPanel::ControlPanel():
     layout->addWidget(&iterationCounter);
     this->setLayout(layout);
 
-    timer.setInterval(100);
+    timer.setInterval(400);
     connect(&timer,SIGNAL(timeout()),SLOT(makeNextStep()));
 
-    startStopButton.setText("Start");
+
+    startStopButton.setIcon(QIcon(":/data/play.svg"));
+    startStopButton.setMaximumWidth(50);
+    startStopButton.setMaximumHeight(50);
+    startStopButton.setIconSize(QSize(50,50));
     connect(&startStopButton,SIGNAL(clicked()),SLOT(startStop()));
+
 }
 
 void ControlPanel::startStop()
@@ -33,12 +38,12 @@ void ControlPanel::startStop()
     if (timer.isActive())
     {
         timer.stop();
-        startStopButton.setText("Start");
+        startStopButton.setIcon(QIcon(":/data/play.svg"));
     }
     else
     {
         timer.start();
-        startStopButton.setText("Stop");
+        startStopButton.setIcon(QIcon(":/data/pause.svg"));
     }
 
 }
@@ -52,7 +57,7 @@ void ControlPanel::reset()
     if (timer.isActive())
     {
         timer.stop();
-        startStopButton.setText("Start");
+        startStopButton.setIcon(QIcon(":/data/play.svg"));
     }
 }
 

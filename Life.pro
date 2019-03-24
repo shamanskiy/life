@@ -28,3 +28,8 @@ HEADERS  += mainwindow.h \
     source/patternSelector.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    resources.qrc
+
+
