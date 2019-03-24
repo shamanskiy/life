@@ -10,6 +10,7 @@ ControlPanel::ControlPanel():
     startStopButton(),
     iterationCounter(),
     timer(),
+    slider(Qt::Horizontal),
     numIterations(0)
 {
     setMinimumHeight(60);
@@ -17,19 +18,28 @@ ControlPanel::ControlPanel():
     setPalette(QPalette(QColor(Qt::blue)));
 
     QHBoxLayout * layout = new QHBoxLayout;
+    layout->addWidget(&slider);
     layout->addWidget(&startStopButton);
     layout->addWidget(&iterationCounter);
+
     this->setLayout(layout);
 
-    timer.setInterval(400);
+    timer.setInterval(100);
     connect(&timer,SIGNAL(timeout()),SLOT(makeNextStep()));
 
+
+    slider.setMaximumWidth(250);
+    slider.setMinimum(50);
+    slider.setMaximum(500);
+    connect(&slider,SIGNAL(valueChanged(int)),SLOT(changeSpeed(int)));
 
     startStopButton.setIcon(QIcon(":/data/play.svg"));
     startStopButton.setMaximumWidth(50);
     startStopButton.setMaximumHeight(50);
     startStopButton.setIconSize(QSize(50,50));
     connect(&startStopButton,SIGNAL(clicked()),SLOT(startStop()));
+
+
 
 }
 
@@ -66,4 +76,9 @@ void ControlPanel::makeNextStep()
     emit nextStep();
     numIterations++;
     iterationCounter.display(numIterations);
+}
+
+void ControlPanel::changeSpeed(int newSpeed)
+{
+    timer.setInterval(newSpeed);
 }
