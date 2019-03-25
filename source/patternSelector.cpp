@@ -7,7 +7,7 @@ PatternSelector::PatternSelector():
    QLabel()
 {
     setAutoFillBackground(true);
-    setPalette(QPalette(QColor(Qt::green)));
+    setPalette(QPalette(QColor(18,18,18)));
 }
 
 void PatternSelector::drawMesh(QPainter &painter)

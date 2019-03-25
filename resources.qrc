@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>data/pause.svg</file>
         <file>data/play.svg</file>
+        <file>data/fast.svg</file>
+        <file>data/reset.svg</file>
     </qresource>
 </RCC>

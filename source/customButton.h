@@ -28,18 +28,10 @@ signals:
     void clearCells();
 
 protected:
+    QPushButton startStopButton;
+    QLCDNumber iterationCounter;
     QTimer timer;
+    QSlider slider;
+
     int numIterations;
-
-    // left group
-    QPushButton saveButton, loadButton, printScreenButton, saveMovieButton, resetButton, fullScreenButton;
-
-    // central group
-    QPushButton startStopButton, fullBackButton, fullForwardButton, reverseButton, extraButton;
-    QSlider navigationSlider;
-    QLabel iterationCounterCurrent, iterationCounterTotal;
-
-    // right group
-    QLabel slowIcon, fastIcon;
-    QSlider speedSlider;
 };

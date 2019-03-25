@@ -15,7 +15,7 @@ CellDrawer::CellDrawer(CellManager & _cellManager):
 {
     setMinimumSize(cellSize*xSize,cellSize*ySize);
     setAutoFillBackground(true);
-    setPalette(QPalette(QColor(Qt::black)));
+    setPalette(QPalette(QColor(24,24,24)));
 }
 
 void CellDrawer::drawMesh(QPainter &painter)
@@ -49,8 +49,8 @@ void CellDrawer::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::white,0));
     drawMesh(painter);
 
-    painter.setPen(QPen(Qt::green,0));
-    painter.setBrush(QBrush(Qt::green,Qt::SolidPattern));
+    painter.setPen(QPen(QColor(30,215,96),0));
+    painter.setBrush(QBrush(QColor(30,215,96),Qt::SolidPattern));
 
     for (int i=0;i< xSize;i++)
         for (int j=0; j< ySize; j++)
