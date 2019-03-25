@@ -57,14 +57,8 @@ ControlPanel::ControlPanel():
     leftGroupLayout->addWidget(&fullScreenButton,1,2);
     leftGroup->setLayout(leftGroupLayout);
 
-    saveButton.setMaximumWidth(20);
-    loadButton.setMaximumWidth(20);
-    printScreenButton.setMaximumWidth(20);
-    saveMovieButton.setMaximumWidth(20);
-    resetButton.setMaximumWidth(20);
-    resetButton.setIcon(QIcon(":/data/reset.svg"));
+    //resetButton.setIcon(QIcon(":/data/reset.svg"));
     connect(&resetButton,SIGNAL(clicked()),SLOT(reset()));
-    fullScreenButton.setMaximumWidth(20);
 
     QGridLayout * centralGroupLayout = new QGridLayout;
     centralGroupLayout->addWidget(&startStopButton,0,3);
@@ -77,10 +71,7 @@ ControlPanel::ControlPanel():
     centralGroupLayout->addWidget(&iterationCounterTotal,1,6);
     centralGroup->setLayout(centralGroupLayout);
 
-    startStopButton.setIcon(QIcon(":/data/play.svg"));
-    startStopButton.setMaximumWidth(30);
-    startStopButton.setAutoFillBackground(true);
-    startStopButton.setPalette(QPalette(QColor(40,40,40)));
+    startStopButton.setIcon(":/data/play.svg",QColor(200,200,200));
     connect(&startStopButton,SIGNAL(clicked()),SLOT(startStop()));
 
     iterationCounterCurrent.setText(QString::number(numIterations));
@@ -113,12 +104,12 @@ void ControlPanel::startStop()
     if (timer.isActive())
     {
         timer.stop();
-        startStopButton.setIcon(QIcon(":/data/play.svg"));
+        //startStopButton.setIcon(QIcon(":/data/play.svg"));
     }
     else
     {
         timer.start();
-        startStopButton.setIcon(QIcon(":/data/pause.svg"));
+        //startStopButton.setIcon(QIcon(":/data/pause.svg"));
     }
 
 }
@@ -133,7 +124,7 @@ void ControlPanel::reset()
     if (timer.isActive())
     {
         timer.stop();
-        startStopButton.setIcon(QIcon(":/data/play.svg"));
+        //startStopButton.setIcon(QIcon(":/data/play.svg"));
     }
 }
 

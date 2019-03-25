@@ -1,37 +1,22 @@
 #pragma once
 
-#include <QLabel>
 #include <QPushButton>
-#include <QLCDNumber>
-#include <QTimer>
-#include <QSlider>
 
-class CellManager;
-
-class ControlPanel : public QLabel
+class CustomButton : public QPushButton
 {
     Q_OBJECT
 public:
 
-    ControlPanel();
+    CustomButton();
+
+    void setIcon(const QString &fileName, const QColor &color);
 
 public slots:
-    void startStop();
-    void reset();
-    void changeSpeed(int newSpeed);
 
 protected slots:
-    void makeNextStep();
 
 signals:
-    void nextStep();
-    void clearCells();
 
 protected:
-    QPushButton startStopButton;
-    QLCDNumber iterationCounter;
-    QTimer timer;
-    QSlider slider;
 
-    int numIterations;
 };

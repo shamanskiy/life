@@ -1,10 +1,11 @@
 #pragma once
 
 #include <QLabel>
-#include <QPushButton>
 #include <QLCDNumber>
 #include <QTimer>
 #include <QSlider>
+
+#include "source/customButton.h"
 
 class CellManager;
 
@@ -32,10 +33,10 @@ protected:
     int numIterations;
 
     // left group
-    QPushButton saveButton, loadButton, printScreenButton, saveMovieButton, resetButton, fullScreenButton;
+    CustomButton saveButton, loadButton, printScreenButton, saveMovieButton, resetButton, fullScreenButton;
 
     // central group
-    QPushButton startStopButton, fullBackButton, fullForwardButton, reverseButton, extraButton;
+    CustomButton startStopButton, fullBackButton, fullForwardButton, reverseButton, extraButton;
     QSlider navigationSlider;
     QLabel iterationCounterCurrent, iterationCounterTotal;
 
