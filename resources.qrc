@@ -2,7 +2,20 @@
     <qresource prefix="/">
         <file>data/pause.svg</file>
         <file>data/play.svg</file>
-        <file>data/fast.svg</file>
         <file>data/reset.svg</file>
+        <file>data/style.qss</file>
+        <file>data/contract.svg</file>
+        <file>data/fullback.svg</file>
+        <file>data/fullforward.svg</file>
+        <file>data/fullscreen.svg</file>
+        <file>data/load.svg</file>
+        <file>data/movie.svg</file>
+        <file>data/reverse.svg</file>
+        <file>data/save.svg</file>
+        <file>data/screen.svg</file>
+        <file>data/stepback.svg</file>
+        <file>data/stepforward.svg</file>
+        <file>data/question.svg</file>
+        <file>data/speed.svg</file>
     </qresource>
 </RCC>

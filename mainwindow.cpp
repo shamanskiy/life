@@ -8,7 +8,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    cellManager(30,30),
+    cellManager(40,40),
     cellDrawer(cellManager),
     controlPanel(),
     patternSelector()
@@ -27,6 +27,11 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->setMargin(0);
     widget->setLayout(layout);
     setCentralWidget(widget);
+
+    QFile styleFile(":/data/style.qss");
+    styleFile.open(QFile::ReadOnly);
+    setStyleSheet(QString::fromLatin1(styleFile.readAll()));
+    styleFile.close();
 
     connect(&controlPanel,SIGNAL(nextStep()),&cellManager,SLOT(computeNextStep()));
     connect(&controlPanel,SIGNAL(nextStep()),&cellDrawer,SLOT(update()));

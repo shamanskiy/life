@@ -5,37 +5,42 @@
 #include <QDebug>
 #include <QLayout>
 
+#include "colorScheme.h"
+
 ControlPanel::ControlPanel():
     QLabel(),
     timer(),
+    baseSpeed(200),
     numIterations(0),
     // left group
-    saveButton(),
-    loadButton(),
-    printScreenButton(),
-    saveMovieButton(),
-    resetButton(),
-    fullScreenButton(),
+    saveButton(":/data/save.svg"),
+    loadButton(":/data/load.svg"),
+    printScreenButton(":/data/screen.svg"),
+    saveMovieButton(":/data/movie.svg"),
+    resetButton(":/data/reset.svg"),
+    fullScreenButton(":/data/fullscreen.svg"),
     // central group
-    startStopButton(),
-    fullBackButton(),
-    fullForwardButton(),
-    reverseButton(),
-    extraButton(),
+    startStopButton(":/data/play.svg",25),
+    fullBackButton(":/data/fullback.svg"),
+    stepBackButton(":/data/stepback.svg"),
+    stepForwardButton(":/data/stepforward.svg"),
+    fullForwardButton(":/data/fullforward.svg"),
     navigationSlider(Qt::Horizontal),
     iterationCounterCurrent(),
     iterationCounterTotal(),
     // right group
-    slowIcon(),
-    fastIcon(),
-    speedSlider(Qt::Horizontal)
+    speedLabel(),
+    speedButton(":/data/speed.svg"),
+    speedSlider(Qt::Horizontal),
+    reverseButton(":/data/reverse.svg")
 {
     setMinimumHeight(100);
     setMaximumHeight(100);
     setAutoFillBackground(true);
-    setPalette(QPalette(QColor(40,40,40)));
+    setPalette(QPalette(QColor(LIFE_LIGHT_GRAY)));
 
-    timer.setInterval(100);
+
+    timer.setInterval(baseSpeed);
     connect(&timer,SIGNAL(timeout()),SLOT(makeNextStep()));
 
     QHBoxLayout * mainLayout = new QHBoxLayout;
@@ -57,46 +62,43 @@ ControlPanel::ControlPanel():
     leftGroupLayout->addWidget(&fullScreenButton,1,2);
     leftGroup->setLayout(leftGroupLayout);
 
-    //resetButton.setIcon(QIcon(":/data/reset.svg"));
     connect(&resetButton,SIGNAL(clicked()),SLOT(reset()));
 
     QGridLayout * centralGroupLayout = new QGridLayout;
     centralGroupLayout->addWidget(&startStopButton,0,3);
-    centralGroupLayout->addWidget(&fullBackButton,0,2);
-    centralGroupLayout->addWidget(&fullForwardButton,0,4);
-    centralGroupLayout->addWidget(&reverseButton,0,1);
-    centralGroupLayout->addWidget(&extraButton,0,5);
+    centralGroupLayout->addWidget(&fullBackButton,0,1);
+    centralGroupLayout->addWidget(&stepBackButton,0,2);
+    centralGroupLayout->addWidget(&stepForwardButton,0,4);
+    centralGroupLayout->addWidget(&fullForwardButton,0,5);
     centralGroupLayout->addWidget(&navigationSlider,1,1,1,5);
     centralGroupLayout->addWidget(&iterationCounterCurrent,1,0);
     centralGroupLayout->addWidget(&iterationCounterTotal,1,6);
     centralGroup->setLayout(centralGroupLayout);
 
-    startStopButton.setIcon(":/data/play.svg",QColor(200,200,200));
     connect(&startStopButton,SIGNAL(clicked()),SLOT(startStop()));
 
     iterationCounterCurrent.setText(QString::number(numIterations));
-    iterationCounterCurrent.setStyleSheet("QLabel {color : #B3B3B3; }");
     iterationCounterCurrent.setMinimumWidth(40);
     iterationCounterCurrent.setAlignment(Qt::AlignRight);
     iterationCounterTotal.setText(QString::number(numIterations));
-    iterationCounterTotal.setStyleSheet("QLabel {color : #B3B3B3; }");
     iterationCounterTotal.setMinimumWidth(40);
 
-    QHBoxLayout * rightGroupLayout = new QHBoxLayout;
-    rightGroupLayout->addWidget(&slowIcon);
-    rightGroupLayout->addWidget(&speedSlider,2);
-    rightGroupLayout->addWidget(&fastIcon);
+    QGridLayout * rightGroupLayout = new QGridLayout;
+    rightGroupLayout->addWidget(&reverseButton,0,0);
+    rightGroupLayout->addWidget(&speedButton,0,1);
+    rightGroupLayout->addWidget(&speedLabel,0,3);
+    rightGroupLayout->addWidget(&speedSlider,0,2);
     rightGroup->setLayout(rightGroupLayout);
 
-    slowIcon.setText("slow");
-    slowIcon.setStyleSheet("QLabel { color : #B3B3B3; }");
-    fastIcon.setText("fast");
-    fastIcon.setStyleSheet("QLabel { color : #B3B3B3; }");
+    speedLabel.setAlignment(Qt::AlignHCenter);
+
+    speedLabel.setText(QString::number(baseSpeed)+"ms");
+    speedLabel.setMinimumWidth(50);
     speedSlider.setMinimumWidth(70);
     speedSlider.setMinimum(10);
     speedSlider.setMaximum(100);
     connect(&speedSlider,SIGNAL(valueChanged(int)),SLOT(changeSpeed(int)));
-    speedSlider.setValue(70);
+    speedSlider.setValue(10000/baseSpeed);
 }
 
 void ControlPanel::startStop()
@@ -104,12 +106,12 @@ void ControlPanel::startStop()
     if (timer.isActive())
     {
         timer.stop();
-        //startStopButton.setIcon(QIcon(":/data/play.svg"));
+        startStopButton.setIcon(":/data/play.svg");
     }
     else
     {
         timer.start();
-        //startStopButton.setIcon(QIcon(":/data/pause.svg"));
+        startStopButton.setIcon(":/data/pause.svg");
     }
 
 }
@@ -118,13 +120,15 @@ void ControlPanel::reset()
 {
     emit clearCells();
     numIterations = 0;
+    changeSpeed(10000/baseSpeed);
+    speedSlider.setValue(10000/baseSpeed);
     iterationCounterCurrent.setText(QString::number(0));
     iterationCounterTotal.setText(QString::number(0));
     startStop();
     if (timer.isActive())
     {
         timer.stop();
-        //startStopButton.setIcon(QIcon(":/data/play.svg"));
+        startStopButton.setIcon(":/data/play.svg");
     }
 }
 
@@ -139,4 +143,5 @@ void ControlPanel::makeNextStep()
 void ControlPanel::changeSpeed(int newSpeed)
 {
     timer.setInterval(10000/newSpeed);
+    speedLabel.setText(QString::number(int(10000/newSpeed))+"ms");
 }

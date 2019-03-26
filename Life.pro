@@ -18,16 +18,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     source/cellManager.cpp \
     source/cellDrawer.cpp \
-    source/customButton.cpp \
+    source/iconButton.cpp \
     source/controlPanel.cpp \
     source/patternSelector.cpp
+
 
 HEADERS  += mainwindow.h \
     source/cellManager.h \
     source/cellDrawer.h \
-    source/customButton.h \
+    source/iconButton.h \
     source/controlPanel.h \
-    source/patternSelector.h
+    source/patternSelector.h \
+    source/colorScheme.h
 
 FORMS    += mainwindow.ui
 

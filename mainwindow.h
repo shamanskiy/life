@@ -8,6 +8,7 @@
 #include "source/controlPanel.h"
 #include "source/patternSelector.h"
 
+
 namespace Ui
 {
 class MainWindow;

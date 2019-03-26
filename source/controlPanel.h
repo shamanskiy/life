@@ -5,7 +5,7 @@
 #include <QTimer>
 #include <QSlider>
 
-#include "source/customButton.h"
+#include "iconButton.h"
 
 class CellManager;
 
@@ -30,17 +30,19 @@ signals:
 
 protected:
     QTimer timer;
+    int baseSpeed;
     int numIterations;
 
     // left group
-    CustomButton saveButton, loadButton, printScreenButton, saveMovieButton, resetButton, fullScreenButton;
+    IconButton saveButton, loadButton, printScreenButton, saveMovieButton, resetButton, fullScreenButton;
 
     // central group
-    CustomButton startStopButton, fullBackButton, fullForwardButton, reverseButton, extraButton;
+    IconButton startStopButton, fullBackButton, stepBackButton, stepForwardButton, fullForwardButton;
     QSlider navigationSlider;
     QLabel iterationCounterCurrent, iterationCounterTotal;
 
     // right group
-    QLabel slowIcon, fastIcon;
+    IconButton speedButton, reverseButton;
+    QLabel speedLabel;
     QSlider speedSlider;
 };

@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 
 #include "cellManager.h"
+#include "colorScheme.h"
 
 
 CellDrawer::CellDrawer(CellManager & _cellManager):
@@ -15,7 +16,7 @@ CellDrawer::CellDrawer(CellManager & _cellManager):
 {
     setMinimumSize(cellSize*xSize,cellSize*ySize);
     setAutoFillBackground(true);
-    setPalette(QPalette(QColor(24,24,24)));
+    setPalette(QPalette(QColor(LIFE_MEDIUM_GRAY)));
 }
 
 void CellDrawer::drawMesh(QPainter &painter)
@@ -49,8 +50,8 @@ void CellDrawer::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::white,0));
     drawMesh(painter);
 
-    painter.setPen(QPen(QColor(30,215,96),0));
-    painter.setBrush(QBrush(QColor(30,215,96),Qt::SolidPattern));
+    painter.setPen(QPen(QColor(LIFE_SPOTIFY_GREEN),0));
+    painter.setBrush(QBrush(QColor(LIFE_SPOTIFY_GREEN),Qt::SolidPattern));
 
     for (int i=0;i< xSize;i++)
         for (int j=0; j< ySize; j++)
