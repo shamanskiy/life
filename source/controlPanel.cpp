@@ -62,6 +62,7 @@ ControlPanel::ControlPanel():
     leftGroupLayout->addWidget(&fullScreenButton,1,2);
     leftGroup->setLayout(leftGroupLayout);
 
+    leftGroup->setMaximumWidth(100);
     connect(&resetButton,SIGNAL(clicked()),SLOT(reset()));
 
     QGridLayout * centralGroupLayout = new QGridLayout;
@@ -90,8 +91,8 @@ ControlPanel::ControlPanel():
     rightGroupLayout->addWidget(&speedSlider,0,2);
     rightGroup->setLayout(rightGroupLayout);
 
+    rightGroup->setMaximumWidth(300);
     speedLabel.setAlignment(Qt::AlignHCenter);
-
     speedLabel.setText(QString::number(baseSpeed)+"ms");
     speedLabel.setMinimumWidth(50);
     speedSlider.setMinimumWidth(70);

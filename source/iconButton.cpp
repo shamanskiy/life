@@ -8,7 +8,8 @@
 IconButton::IconButton(const QString & _iconFileName, int iconSize):
     QPushButton(),
     iconFileName(_iconFileName),
-    hoveredOver(false)
+    hoveredOver(false),
+    pressed(false)
 {
     setMaximumWidth(30);
     setMaximumHeight(30);
@@ -19,6 +20,9 @@ IconButton::IconButton(const QString & _iconFileName, int iconSize):
     setIconSize(QSize(iconSize,iconSize));
 
     updateIcon();
+    connect(this,SIGNAL(pressed()),this,SLOT(pressedSlot()));
+    connect(this,SIGNAL(released()),this,SLOT(releasedSlot()));
+
 }
 
 void IconButton::setIcon(const QString &_iconFileName)
@@ -41,16 +45,28 @@ void IconButton::leaveEvent(QEvent *event)
     updateIcon();
 }
 
+void IconButton::pressedSlot()
+{
+    pressed = true;
+    updateIcon();
+}
+
+void IconButton::releasedSlot()
+{
+    pressed = false;
+    updateIcon();
+}
+
 void IconButton::updateIcon()
 {
     if (!iconFileName.isEmpty())
     {
         QPixmap pixmap(iconFileName);
         QBitmap mask = pixmap.createMaskFromColor(QColor("black"),Qt::MaskOutColor);
-        if (hoveredOver)
-            pixmap.fill(QColor(LIFE_HOVER_TEXT));
-        else
+        if (pressed || !hoveredOver)
             pixmap.fill(QColor(LIFE_BASE_TEXT));
+        else if (hoveredOver)
+            pixmap.fill(QColor(LIFE_HOVER_TEXT));
         pixmap.setMask(mask);
 
         QPushButton::setIcon(QIcon(pixmap));

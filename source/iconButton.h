@@ -13,7 +13,10 @@ public:
 
 public slots:
 
+
 protected slots:
+    virtual void pressedSlot();
+    virtual void releasedSlot();
 
 signals:
 
@@ -21,10 +24,12 @@ protected:
 
     virtual void enterEvent(QEvent * event);
     virtual void leaveEvent(QEvent * event);
+
     void updateIcon();
 
 protected:
     QString iconFileName;
     bool hoveredOver;
+    bool pressed;
 
 };
